@@ -9,8 +9,18 @@ export class UserPhoneRequest extends Component {
     
     continue = e => {
         e.preventDefault();
+        console.log("[DEBUG]: should go in random4digitsNumber");
+        this.props.values.confirmationCodeSent = this.random4digitNumber;
+        console.log("[DEBUG]: and now to next step");
         this.props.nextStep();
-    } 
+    };
+
+    random4digitNumber() {
+        var val = Math.floor(1000 + Math.random() * 9000);
+        console.log("[DEBUG] : " + val);
+        return val;
+    }
+
 
     render() {
         const { values, handleChange } = this.props;
@@ -23,7 +33,7 @@ export class UserPhoneRequest extends Component {
                         <TextValidator
                             floatingLabelText="N° de téléphone"
                             onChange={handleChange('phoneNumber')}
-                            label="Phone Number"
+                            label="N° de téléphone"
                             name="phoneNumber"
                             value={values.phoneNumber}
                             validators={['required', 'matchRegexp:^0[1-6]{1}(([0-9]{2}){4})|((\s[0-9]{2}){4})|((-[0-9]{2}){4})$']}

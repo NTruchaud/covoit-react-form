@@ -15,7 +15,8 @@ export class UserForm extends Component {
         lastName: '',
         email: '',
         birthDate: new Date(),
-        password: ''
+        password: '',
+        confirmationCodeSent: ''
     }
 
     // Go to the next step 
@@ -48,8 +49,8 @@ export class UserForm extends Component {
         const { email } = this.state;
         const { birthDate } = this.state;
         const { password } = this.state;
-        const { passwordInputType } = this.state;
-        const values = { phoneNumber, confirmationCode, firstName, lastName, email, birthDate, password };
+        const { confirmationCodeSent } = this.state;
+        const values = { phoneNumber, confirmationCode, firstName, lastName, email, birthDate, password, confirmationCodeSent };
         
         switch(step) {
             case 1:
