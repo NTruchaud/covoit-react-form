@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
-import TextField from 'material-ui/TextField';
+// import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 export class UserPhoneRequest extends Component {
     
@@ -18,18 +19,25 @@ export class UserPhoneRequest extends Component {
             <MuiThemeProvider>
                 <React.Fragment>
                     <AppBar title="Entrez votre numéro de téléphone" />
-                    <TextField
-                        floatingLabelText="N° de téléphone"
-                        onChange={handleChange('phoneNumber')}
-                        defaultValue={values.phoneNumber}
-                    />
-                    <br />
-                    <RaisedButton 
-                        label="Suivant"
-                        primary={true}
-                        style={styles.button}
-                        onClick={this.continue}
-                    />
+                    <ValidatorForm ref='form' onError={errors => console.log(errors)}>
+                        <TextValidator
+                            floatingLabelText="N° de téléphone"
+                            onChange={handleChange('phoneNumber')}
+                            label="Phone Number"
+                            name="phoneNumber"
+                            value={values.phoneNumber}
+                            validators={['required', 'matchRegexp:^0[1-6]{1}(([0-9]{2}){4})|((\s[0-9]{2}){4})|((-[0-9]{2}){4})$']}
+                            errorMessages={['Veuillez remplir ce champs', "Le numéro de téléphone n'est pas valide"]}
+                        />
+                        <br />
+                        <RaisedButton 
+                            label="Suivant"
+                            primary={true}
+                            disabled={!values.phoneNumber}
+                            style={styles.button}
+                            onClick={this.continue}
+                        />
+                    </ValidatorForm>
                 </React.Fragment>
             </MuiThemeProvider>
         )

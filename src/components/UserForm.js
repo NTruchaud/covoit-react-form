@@ -14,7 +14,7 @@ export class UserForm extends Component {
         firstName: '',
         lastName: '',
         email: '',
-        birthDate: '',
+        birthDate: new Date(),
         password: ''
     }
     
@@ -33,7 +33,7 @@ export class UserForm extends Component {
             step: step - 1
         });
     }
-    
+
     // Handle fields change
     handleChange = input => e => {
         this.setState({[input]: e.target.value});
@@ -93,5 +93,5 @@ export class UserForm extends Component {
     }
 }
                 
-                export default UserForm
+export default UserForm
                 
