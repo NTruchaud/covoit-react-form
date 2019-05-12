@@ -7,6 +7,25 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 export class UserPersonalDetails extends Component {
 
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            passwordInputType : 'password'
+        }
+        this.showHide = this.showHide.bind(this);
+    }
+    
+
+    // Show / Hide password
+    showHide(e){
+        e.preventDefault();
+        e.stopPropagation();
+        this.setState({
+            passwordInputType: this.state.passwordInputType === 'input' ? 'password' : 'input'
+        })  
+    }
+
     continue = e => {
         e.preventDefault();
         this.props.nextStep();
@@ -18,7 +37,7 @@ export class UserPersonalDetails extends Component {
     }
 
     render() {
-        const { values, handleChange } = this.props;
+        const { values, handleChange, showHide } = this.props;
         
         return (
             <MuiThemeProvider>
@@ -69,11 +88,18 @@ export class UserPersonalDetails extends Component {
                         <TextValidator
                             floatingLabelText="Mot de passe"
                             onChange={handleChange('password')}
+                            type={this.state.passwordInputType}
                             value={values.password}
                             label="password"
                             name="password"
                             validators={['required']}
                             errorMessages={['Veuillez remplir ce champs']}
+                        />
+                        <RaisedButton 
+                            label="Afficher"
+                            primary={false}
+                            style={styles.button}
+                            onClick={this.showHide}
                         />
                         <br />
                         <RaisedButton 
