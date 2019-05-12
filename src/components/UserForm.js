@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import UserPhoneRequest from './UserPhoneRequest';
 import UserCodeConfirmation from './UserCodeConfirmation';
 import UserPersonalDetails from './UserPersonalDetails';
+import { Confirm } from './Confirm';
+import { Success } from './Success';
 
 export class UserForm extends Component {
     
@@ -23,7 +25,7 @@ export class UserForm extends Component {
             step: step + 1
         });
     }
-
+    
     // Come back to previous step
     prevStep = () => {
         const { step } = this.state;
@@ -31,12 +33,12 @@ export class UserForm extends Component {
             step: step - 1
         });
     }
-
+    
     // Handle fields change
     handleChange = input => e => {
         this.setState({[input]: e.target.value});
     }
-
+    
     render() {
         const { step } = this.state;
         const { phoneNumber } = this.state;
@@ -47,7 +49,7 @@ export class UserForm extends Component {
         const { birthDate } = this.state;
         const { password } = this.state;
         const values = { phoneNumber, confirmationCode, firstName, lastName, email, birthDate, password };
-       
+        
         switch(step) {
             case 1:
                 return (
@@ -75,9 +77,21 @@ export class UserForm extends Component {
                         values={ values }
                     />
                 )
+            case 4:
+                return (
+                    <Confirm 
+                        nextStep={ this.nextStep }
+                        prevStep={ this.prevStep }
+                        values={ values }
+                    />
+                )
+            case 5:
+                return (
+                    <Success />
+                )
         }
     }
 }
-    
-export default UserForm
-    
+                
+                export default UserForm
+                

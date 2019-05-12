@@ -22,7 +22,7 @@ export class UserPersonalDetails extends Component {
         return (
             <MuiThemeProvider>
                 <React.Fragment>
-                    <AppBar title="Entrez vos information personnelles" />
+                    <AppBar title="Entrez vos informations personnelles" />
                     <TextField
                         floatingLabelText="Prénom"
                         onChange={handleChange('firstName')}
