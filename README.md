@@ -4,7 +4,7 @@
 
 Before launching the project, please run :
 
-### npm install
+### `npm install`
 
 In the project directory, you can run:
 
