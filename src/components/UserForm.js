@@ -7,6 +7,12 @@ import { Success } from './Success';
 
 export class UserForm extends Component {
     
+    constructor(props){
+        super(props);
+
+        this.handleCodeGeneration = this.handleCodeGeneration.bind(this);
+    }
+
     state = {
         step: 1,
         phoneNumber: '',
@@ -37,7 +43,16 @@ export class UserForm extends Component {
 
     // Handle fields change
     handleChange = input => e => {
-        this.setState({[input]: e.target.value});
+        this.setState({
+            [input]: e.target.value
+        });
+    }
+
+    // Handle code generation
+    handleCodeGeneration(code) {
+        this.setState({
+            confirmationCodeSent: code
+        });
     }
     
     render() {
@@ -58,6 +73,7 @@ export class UserForm extends Component {
                     <UserPhoneRequest 
                         nextStep={ this.nextStep }
                         handleChange={ this.handleChange }
+                        handleCodeGeneration={ this.handleCodeGeneration }
                         values={ values }
                     />
                 )

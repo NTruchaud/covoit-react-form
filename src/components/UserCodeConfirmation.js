@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
-import TextField from 'material-ui/TextField';
+// import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Snackbar from 'material-ui/Snackbar';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 export class UserCodeConfirmation extends Component {
 
@@ -24,6 +24,16 @@ export class UserCodeConfirmation extends Component {
         this.props.prevStep();
     }
 
+    componentDidMount() {
+        // custom rule will have name 'isCodeMatching'
+        ValidatorForm.addValidationRule('isCodeMatching', (value) => {
+            if (value != this.props.values.confirmationCodeSent) {
+                return false;
+            }
+            return true;
+        });
+    }
+
     render() {
         const { values, handleChange } = this.props;
         
@@ -31,30 +41,35 @@ export class UserCodeConfirmation extends Component {
             <MuiThemeProvider>
                 <React.Fragment>
                     <AppBar title="Entrez votre code de confirmation" />
-                    <Snackbar
-                        open={this.state.open}
-                        autoHideDuration={600000}
-                        message={<span id="message-id">Votre code est {values.codeConfirmationSent}</span>}
-                        /> 
-                    <TextField
+                    <p>Votre code est : { values.confirmationCodeSent }</p>
+                    <ValidatorForm ref='form' onError={errors => console.log(errors)}>
+
+                        <TextValidator
                         floatingLabelText="Code de confirmation"
                         onChange={handleChange('confirmationCode')}
-                        defaultValue={values.confirmationCode}
-                    />
-                    <br />
-                    <RaisedButton 
-                        label="Suivant"
-                        primary={true}
-                        style={styles.button}
-                        disabled={!values.confirmationCode}
-                        onClick={this.continue}
-                    />
-                    <RaisedButton 
-                        label="Précédent"
-                        primary={false}
-                        style={styles.button}
-                        onClick={this.back}
-                    />
+                        label="Code de confirmation"
+                        name="confirmationCode"
+                        value={values.confirmationCode}
+                        validators={['required', 'isCodeMatching']}
+                        errorMessages={['Veuillez remplir ce champs', "Le code ne correspond pas au code qui vous a été envoyé"]}
+                        />
+                        <br />
+                        <RaisedButton 
+                            label="Suivant"
+                            primary={true}
+                            style={styles.button}
+                            disabled={!values.confirmationCode}
+                            onClick={this.continue}
+                        />
+                        <RaisedButton 
+                            label="Précédent"
+                            primary={false}
+                            style={styles.button}
+                            onClick={this.back}
+                        />
+
+                    </ValidatorForm>
+                    
                 </React.Fragment>
             </MuiThemeProvider>
         )

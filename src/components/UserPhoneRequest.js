@@ -6,12 +6,12 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 export class UserPhoneRequest extends Component {
-    
+
     continue = e => {
         e.preventDefault();
-        console.log("[DEBUG]: should go in random4digitsNumber");
-        this.props.values.confirmationCodeSent = this.random4digitNumber;
-        console.log("[DEBUG]: and now to next step");
+        var code = this.random4digitNumber();
+
+        this.props.handleCodeGeneration(code);
         this.props.nextStep();
     };
 
@@ -20,7 +20,6 @@ export class UserPhoneRequest extends Component {
         console.log("[DEBUG] : " + val);
         return val;
     }
-
 
     render() {
         const { values, handleChange } = this.props;
