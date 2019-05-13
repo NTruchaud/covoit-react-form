@@ -22,6 +22,7 @@ export class Success extends Component {
             <MuiThemeProvider>
                 <React.Fragment>
                     <AppBar title="Félicitation !" />
+                    <img src="../../car.svg" style={styles.img}/>
                     <h1>Merci de vous être inscrit, et à bientôt sur la route !</h1>
                 </React.Fragment>
             </MuiThemeProvider>
@@ -30,8 +31,9 @@ export class Success extends Component {
 }
 
 const styles = {
-    button: {
-        margin: 15
+    img: {
+        height: 200,
+        width: 200
     }
 }
 

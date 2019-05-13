@@ -30,6 +30,7 @@ export class UserPhoneRequest extends Component {
                     <AppBar title="Entrez votre numéro de téléphone" />
                     <ValidatorForm ref='form' onError={errors => console.log(errors)}>
                         <TextValidator
+                            className="phoneNumber"
                             floatingLabelText="N° de téléphone"
                             onChange={handleChange('phoneNumber')}
                             label="N° de téléphone"
@@ -41,6 +42,7 @@ export class UserPhoneRequest extends Component {
                         />
                         <br />
                         <RaisedButton 
+                            className="nextButton"
                             label="Suivant"
                             primary={true}
                             disabled={values.disabled}
