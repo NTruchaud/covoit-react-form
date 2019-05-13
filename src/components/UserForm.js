@@ -11,6 +11,7 @@ export class UserForm extends Component {
         super(props);
 
         this.handleCodeGeneration = this.handleCodeGeneration.bind(this);
+        this.validatorListener = this.validatorListener.bind(this);
     }
 
     state = {
@@ -22,7 +23,8 @@ export class UserForm extends Component {
         email: '',
         birthDate: new Date(),
         password: '',
-        confirmationCodeSent: ''
+        confirmationCodeSent: '',
+        disabled: true
     }
 
     // Go to the next step 
@@ -31,6 +33,11 @@ export class UserForm extends Component {
         this.setState({
             step: step + 1
         });
+        if (this.state.step != 3) {
+            this.setState({
+                disabled: true
+            })
+        }
     }
     
     // Come back to previous step
@@ -54,6 +61,12 @@ export class UserForm extends Component {
             confirmationCodeSent: code
         });
     }
+
+    validatorListener = (result) => {
+        this.setState({ 
+            disabled: !result 
+        });
+    }
     
     render() {
         const { step } = this.state;
@@ -65,7 +78,8 @@ export class UserForm extends Component {
         const { birthDate } = this.state;
         const { password } = this.state;
         const { confirmationCodeSent } = this.state;
-        const values = { phoneNumber, confirmationCode, firstName, lastName, email, birthDate, password, confirmationCodeSent };
+        const { disabled } = this.state;
+        const values = { phoneNumber, confirmationCode, firstName, lastName, email, birthDate, password, confirmationCodeSent, disabled };
         
         switch(step) {
             case 1:
@@ -75,6 +89,7 @@ export class UserForm extends Component {
                         handleChange={ this.handleChange }
                         handleCodeGeneration={ this.handleCodeGeneration }
                         values={ values }
+                        validatorListener={ this.validatorListener }
                     />
                 )
             case 2:
@@ -84,6 +99,7 @@ export class UserForm extends Component {
                         prevStep={ this.prevStep }
                         handleChange={ this.handleChange }
                         values={ values }
+                        validatorListener={ this.validatorListener }
                     />
                 )
             case 3:
@@ -93,6 +109,7 @@ export class UserForm extends Component {
                         prevStep={ this.prevStep }
                         handleChange={ this.handleChange }
                         values={ values }
+                        validatorListener={ this.validatorListener }
                     />
                 )
             case 4:

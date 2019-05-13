@@ -37,7 +37,7 @@ export class UserPersonalDetails extends Component {
     }
 
     render() {
-        const { values, handleChange, showHide } = this.props;
+        const { values, handleChange, validatorListener } = this.props;
         
         return (
             <MuiThemeProvider>
@@ -65,16 +65,6 @@ export class UserPersonalDetails extends Component {
                         />
                         <br />
                         <TextValidator
-                            floatingLabelText="Email"
-                            onChange={handleChange('email')}
-                            value={values.email}
-                            label="Email"
-                            name="email"
-                            validators={['required', 'isEmail']}
-                            errorMessages={['Veuillez remplir ce champs', "Le mail saisi n'est pas valide"]}
-                        />
-                        <br />
-                        <TextValidator
                             floatingLabelText="Date de naissance"
                             onChange={handleChange('birthDate')}
                             value={values.birthDate}
@@ -83,6 +73,17 @@ export class UserPersonalDetails extends Component {
                             type="date"
                             validators={['required']}
                             errorMessages={['Veuillez remplir ce champs']}
+                        />
+                        <br />
+                        <TextValidator
+                            floatingLabelText="Email"
+                            onChange={handleChange('email')}
+                            value={values.email}
+                            label="Email"
+                            name="email"
+                            validatorListener={validatorListener}
+                            validators={['required', 'isEmail']}
+                            errorMessages={['Veuillez remplir ce champs', "Le mail saisi n'est pas valide"]}
                         />
                         <br />
                         <TextValidator
@@ -106,7 +107,7 @@ export class UserPersonalDetails extends Component {
                             label="Suivant"
                             primary={true}
                             style={styles.button}
-                            disabled={!values.firstName || !values.lastName || !values.email || !values.birthDate || !values.password}
+                            disabled={values.disabled}
                             onClick={this.continue}
                         />
                         <RaisedButton 

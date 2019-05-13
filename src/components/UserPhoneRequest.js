@@ -17,12 +17,12 @@ export class UserPhoneRequest extends Component {
 
     random4digitNumber() {
         var val = Math.floor(1000 + Math.random() * 9000);
-        console.log("[DEBUG] : " + val);
+        // console.log("[DEBUG] : " + val);
         return val;
     }
 
     render() {
-        const { values, handleChange } = this.props;
+        const { values, handleChange, validatorListener } = this.props;
         
         return (
             <MuiThemeProvider>
@@ -35,6 +35,7 @@ export class UserPhoneRequest extends Component {
                             label="N° de téléphone"
                             name="phoneNumber"
                             value={values.phoneNumber}
+                            validatorListener={validatorListener}
                             validators={['required', 'matchRegexp:^0[1-6]{1}(([0-9]{2}){4})|((\s[0-9]{2}){4})|((-[0-9]{2}){4})$']}
                             errorMessages={['Veuillez remplir ce champs', "Le numéro de téléphone n'est pas valide"]}
                         />
@@ -42,7 +43,7 @@ export class UserPhoneRequest extends Component {
                         <RaisedButton 
                             label="Suivant"
                             primary={true}
-                            disabled={!values.phoneNumber}
+                            disabled={values.disabled}
                             style={styles.button}
                             onClick={this.continue}
                         />
